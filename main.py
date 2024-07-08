@@ -59,15 +59,44 @@ class PetDatabase:
         print("+----------------------+")
         print("{} rows in set.".format(len(found_pets)))
 
+    def edit_pet(self):
+        # to edit a pet's details
+        try:
+            pet_id = int(input("Enter the ID of the pet to edit: "))
+            if 0 <= pet_id < len(self.pets):
+                new_name = input("Enter new name: ").strip()
+                new_age = int(input("Enter new age: "))
+                self.pets[pet_id].name = new_name
+                self.pets[pet_id].age = new_age
+                print("Pet details updated successfully.")
+            else:
+                print("Invalid ID.")
+        except ValueError:
+            print("Please enter a valid ID and age.")
+            
+    def remove_pet(self):
+        # to remove a pet from the list
+        try:
+            pet_id = int(input("Enter the ID of the pet to remove: "))
+            if 0 <= pet_id < len(self.pets):
+                self.pets.pop(pet_id)
+                print("Pet removed successfully.")
+            else:
+                print("Invalid ID. Should be in the range 0 - {}".format(len(self.pets)))
+        except ValueError:
+            print("Please enter a valid ID")
+
 def main():
     database = PetDatabase() #initialising the database
     while True:
         print("What would you like to do?")
         print("1) View all pets")
         print("2) Add more pets")
-        print("3) Search pets by name")
-        print("4) Search pets by age")
-        print("5) Exit program")
+        print("3) Update an existing pet")
+        print("4) Remove an existing pet")
+        print("5) Search pets by name")
+        print("6) Search pets by age")
+        print("7) Exit program")
         choice = input("Your choice: ")
 
         if choice == '1':
@@ -75,10 +104,14 @@ def main():
         elif choice == '2':
             database.add_pets()
         elif choice == '3':
-            database.search_by_name()
+            database.edit_pet()
         elif choice == '4':
-            database.search_by_age()
+            database.remove_pet()
         elif choice == '5':
+            database.search_by_name()
+        elif choice == '6':
+            database.search_by_age()
+        elif choice == '7':
             print("Goodbye!")
             break
         else:
